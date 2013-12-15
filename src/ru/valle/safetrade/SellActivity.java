@@ -160,7 +160,6 @@ public final class SellActivity extends FragmentActivity {
                         } else {
                             new AlertDialog.Builder(SellActivity.this).setMessage(getString(R.string.not_confirmation_code)).setPositiveButton(android.R.string.ok, null).show();
                         }
-
                     }
                     break;
                     case REQUEST_SCAN_PRIVATE_KEY: {
@@ -332,9 +331,11 @@ public final class SellActivity extends FragmentActivity {
                 }
                 confirmationCodeDecodingTask = null;
                 if (!TextUtils.isEmpty(address)) {
+                    confirmationCodeView.setText(confirmationCode);
                     addressView.setText(address);
                     MainActivity.updateBalance(SellActivity.this, id, address, onAddressStateReceivedListener);
                 } else {
+                    loadState(rowId);
                     new AlertDialog.Builder(SellActivity.this).setMessage(getString(R.string.confirmation_code_doesnt_match)).setPositiveButton(android.R.string.ok, null).show();
                 }
             }
@@ -423,7 +424,9 @@ public final class SellActivity extends FragmentActivity {
                 statusView.setText(status);
                 passwordView.setText(tradeRecord.password);
                 intermediateCodeView.setText(tradeRecord.intermediateCode);
-                confirmationCodeView.setText(tradeRecord.confirmationCode);
+                if (confirmationCodeDecodingTask == null) {
+                    confirmationCodeView.setText(tradeRecord.confirmationCode);
+                }
                 addressView.setText(tradeRecord.address);
                 finalAddressView.setText(tradeRecord.destinationAddress);
                 privateKeyView.setText(tradeRecord.encryptedPrivateKey);
