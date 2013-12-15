@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="ru.valle.safetrade"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19"/>
+
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:theme="@android:style/Theme.DeviceDefault.Light"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
+        <activity
+            android:name="MainActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SellActivity"
+            android:label="@string/sell_title"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".BuyActivity"
+            android:label="@string/buy_title"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+        <activity android:name=".ScanActivity" android:label="@string/scan_title"/>
+
+        <provider
+            android:name=".QRCodesProvider"
+            android:exported="true"
+            android:authorities="ru.valle.safetrade.QRCodesProvider"
+            tools:ignore="ExportedContentProvider"/>
+
+    </application>
+</manifest>

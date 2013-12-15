@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SafeTrade</string>
+    <string name="sell_title">Sell</string>
+    <string name="buy_title">Buy</string>
+    <string name="generating_password">Generating password…</string>
+    <string name="generating_intermediate_code">Generating intermediate code, it may take about a minute…</string>
+    <string name="now_send_intermediate_code">Password is stored. Don\'t show it anyone!\nNow send intermediate code to buyer.</string>
+    <string name="password_label">Password for the key:</string>
+    <string name="waiting_for_confirmation_code">Send intermediate code and receive confirmation code from buyer</string>
+    <string name="checking_balance">Checking balance for the received address</string>
+    <string name="waiting_funds_depositing">Waiting for funds depositing by buyer</string>
+    <string name="waiting_private_key">Waiting private key</string>
+    <string name="you_should_take_funds">You should take the payment</string>
+    <string name="successfully_sold">Successfully sold</string>
+    <string name="checking_balance_buyer">Checking balance…</string>
+    <string name="deposit_funds">Deposit funds to the generated address</string>
+    <string name="waiting_item">Waiting item delivery. Don\'t send encrypted private key before you\'ll get the purchase.</string>
+    <string name="all_set">Successfully purchased item</string>
+    <string name="status_unknown">Unknown status</string>
+    <string name="selling">Selling</string>
+    <string name="buying">Buying</string>
+    <string name="bought">Bought</string>
+    <string name="sold">Sold</string>
+    <string name="btc_suffix">BTC</string>
+    <string name="status_title">TODO:</string>
+    <string name="default_item_name">Unknown Item</string>
+    <string name="generating_address_and_encrypted_private_key">Generating address and encrypted private key…</string>
+    <string name="generating_confiramtion_code">Generating confirmation code…</string>
+    <string name="dialog_get_intermediate_code_title">Enter intermediate code</string>
+    <string name="scan_title">Scan intermediate code</string>
+    <string name="error_open_camera">Unable to open camera. </string>
+    <string name="no_email_clients">No email clients installed</string>
+    <string name="decoding_confirmation_code_using_password">Decoding confirmation code using your password…</string>
+    <string name="not_confirmation_but_intermediate_code">It\'s an intermediate code, not a confirmation. Please ensure that your code starts with \"cfrm\".</string>
+    <string name="not_confirmation_code">It isn\'t a confirmation code. Please ensure that your code starts with \\"cfrm\\".</string>
+    <string name="confirmation_code_doesnt_match">This confirmation code doesn\'t match your password or intermediate code. Ask buyer to double-check it.</string>
+    <string name="decrypting_private_key">Decrypting private key…</string>
+    <string name="unable_to_decrypt_private_key">Unable to decrypt this private key using your password.</string>
+    <string name="not_encrypted_private_key">It isn\'t an encrypted private key because it doesn\'t start with \"6P\".</string>
+    <string name="not_address">It isn\'t a bitcoin address</string>
+    <string name="take_button">Transfer %s BTC to</string>
+    <string name="take_no_btc_button">Transfer BTC to</string>
+
+</resources>

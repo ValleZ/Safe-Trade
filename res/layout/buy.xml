@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seller's intermediate code:"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+
+        />
+
+    <TextView
+        android:id="@+id/intermediate_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Intermediate code"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirmation code\n(send it to seller now so he can verify address using password)"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/confirmation_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmation code"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/send_confirmation_code_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send..."
+            android:layout_margin="8dp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:hint="address"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+            <Button
+                android:layout_gravity="center_vertical|right"
+                android:id="@+id/deposit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deposit funds..."
+                />
+            <Button
+                android:layout_gravity="center_vertical|right"
+                android:id="@+id/deposit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show QR code"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Encrypted private key\n(seller knows password, you know the key)"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:id="@+id/encrypted_private_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Encrypted private key"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/send_encrypted_private_key_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send..."
+            android:layout_margin="8dp"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
