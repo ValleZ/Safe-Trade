@@ -112,20 +112,23 @@ public final class SellActivity extends FragmentActivity {
         findViewById(R.id.scan_confirmation_code_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(SellActivity.this, ScanActivity.class), REQUEST_SCAN_CONFIRMATION_CODE);
+                Intent intent = new Intent(SellActivity.this, ScanActivity.class).putExtra(ScanActivity.EXTRA_TITLE, getString(R.string.scan_confirmation_code_title));
+                startActivityForResult(intent, REQUEST_SCAN_CONFIRMATION_CODE);
             }
         });
 
         findViewById(R.id.scan_encrypted_private_key_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(SellActivity.this, ScanActivity.class), REQUEST_SCAN_PRIVATE_KEY);
+                Intent intent = new Intent(SellActivity.this, ScanActivity.class).putExtra(ScanActivity.EXTRA_TITLE, getString(R.string.scan_encrypted_private_key_title));
+                startActivityForResult(intent, REQUEST_SCAN_PRIVATE_KEY);
             }
         });
         findViewById(R.id.scan_final_address_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(SellActivity.this, ScanActivity.class), REQUEST_SCAN_FINAL_ADDRESS);
+                Intent intent = new Intent(SellActivity.this, ScanActivity.class).putExtra(ScanActivity.EXTRA_TITLE, getString(R.string.scan_final_address_title));
+                startActivityForResult(intent, REQUEST_SCAN_FINAL_ADDRESS);
             }
         });
 
@@ -169,7 +172,7 @@ public final class SellActivity extends FragmentActivity {
                     }
                     break;
                     case REQUEST_SCAN_FINAL_ADDRESS: {
-                        String address;
+                        final String address;
                         if (scannedResult.startsWith(SCHEME_BITCOIN)) {
                             scannedResult = scannedResult.substring(SCHEME_BITCOIN.length());
                             int queryStartIndex = scannedResult.indexOf('?');
@@ -182,6 +185,17 @@ public final class SellActivity extends FragmentActivity {
                         }
                         if (!TextUtils.isEmpty(address)) {
                             finalAddressView.setText(address);
+                            final long id = rowId;
+                            new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... params) {
+                                    SQLiteDatabase db = DatabaseHelper.getInstance(SellActivity.this).getWritableDatabase();
+                                    ContentValues cv = new ContentValues();
+                                    cv.put(DatabaseHelper.COLUMN_FINAL_ADDRESS, address);
+                                    db.update(DatabaseHelper.TABLE_HISTORY, cv, BaseColumns._ID + "=?", new String[]{String.valueOf(id)});
+                                    return null;
+                                }
+                            }.execute();
                         }
                     }
                     break;

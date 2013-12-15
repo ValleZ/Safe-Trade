@@ -15,6 +15,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 import net.sourceforge.zbar.Config;
@@ -27,6 +28,7 @@ import ru.valle.btc.CameraPreview;
 
 public final class ScanActivity extends Activity {
     private static final String TAG = "CameraTestActivity";
+    public static final String EXTRA_TITLE = "title";
 
     private Camera camera;
     private ImageScanner scanner;
@@ -38,6 +40,10 @@ public final class ScanActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        String title = getIntent().getStringExtra(EXTRA_TITLE);
+        if (!TextUtils.isEmpty(title)) {
+            setTitle(title);
+        }
         if (camera == null) {
             try {
                 camera = Camera.open();

@@ -41,5 +41,9 @@
     <string name="not_address">It isn\'t a bitcoin address</string>
     <string name="take_button">Transfer %s BTC to</string>
     <string name="take_no_btc_button">Transfer BTC to</string>
+    <string name="scan_confirmation_code_title">Scan confirmation code</string>
+    <string name="scan_encrypted_private_key_title">Scan encrypted private key</string>
+    <string name="scan_final_address_title">Scan address</string>
+    <string name="scan_intermediate_code_title">Scan intermediate code</string>
 
 </resources>

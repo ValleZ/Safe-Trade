@@ -36,7 +36,6 @@ import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 public final class MainActivity extends FragmentActivity {
@@ -162,7 +161,8 @@ public final class MainActivity extends FragmentActivity {
         view.findViewById(R.id.scan_intermediate_code_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(MainActivity.this, ScanActivity.class), REQUEST_SCAN_INTERMEDIATE_CODE);
+                Intent intent = new Intent(MainActivity.this, ScanActivity.class).putExtra(ScanActivity.EXTRA_TITLE, getString(R.string.scan_intermediate_code_title));
+                startActivityForResult(intent, REQUEST_SCAN_INTERMEDIATE_CODE);
             }
         });
         builder.setTitle(getString(R.string.dialog_get_intermediate_code_title));

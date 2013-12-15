@@ -38,7 +38,7 @@
             android:label="@string/buy_title"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
-        <activity android:name=".ScanActivity" android:label="@string/scan_title"/>
+        <activity android:name=".ScanActivity"/>
 
         <provider
             android:name=".QRCodesProvider"
