@@ -80,6 +80,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:padding="8dp"
             >
 
@@ -97,12 +98,21 @@
                 android:textSize="18sp"
                 android:hint="address"
                 />
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
+
             <Button
                 android:layout_gravity="center_vertical|right"
                 android:id="@+id/deposit_button"
@@ -110,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="Deposit funds..."
                 />
+
             <Button
                 android:layout_gravity="center_vertical|right"
                 android:id="@+id/deposit_button"
