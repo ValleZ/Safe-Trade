@@ -59,7 +59,6 @@ public final class SellActivity extends FragmentActivity {
     private static final int REQUEST_SCAN_PRIVATE_KEY = 3;
     private static final int REQUEST_SCAN_FINAL_ADDRESS = 4;
     private TextView passwordView;
-    private TextView statusView;
     private TextView intermediateCodeView;
     private long rowId;
     private AsyncTask<Void, Void, TradeRecord> loadStateTask;
@@ -95,7 +94,6 @@ public final class SellActivity extends FragmentActivity {
         setContentView(R.layout.sell);
         passwordView = (TextView) findViewById(R.id.password);
         intermediateCodeView = (TextView) findViewById(R.id.intermediate_code);
-        statusView = (TextView) findViewById(R.id.status_label);
         balanceView = (TextView) findViewById(R.id.balance);
         addressView = (TextView) findViewById(R.id.address);
         confirmationCodeView = (EditText) findViewById(R.id.confirmation_code);
@@ -420,8 +418,6 @@ public final class SellActivity extends FragmentActivity {
                 tradeInfo = tradeRecord;
                 loadStateTask = null;
                 rowId = tradeRecord.id;
-                int status = tradeRecord.getStatus();
-                statusView.setText(status);
                 passwordView.setText(tradeRecord.password);
                 intermediateCodeView.setText(tradeRecord.intermediateCode);
                 if (confirmationCodeDecodingTask == null) {

@@ -57,9 +57,6 @@ public final class TradeRecord {
             if (balance < 0) {
                 return R.string.checking_balance;
             }
-            if (balance == 0) {
-                return R.string.waiting_funds_depositing;
-            }
             if (TextUtils.isEmpty(encryptedPrivateKey)) {
                 return R.string.waiting_private_key;
             }
@@ -71,7 +68,7 @@ public final class TradeRecord {
             if (balance < 0) {
                 return R.string.checking_balance_buyer;
             }
-            if (balance == 0) {
+            if (balance == 0 && !itemReceived) {
                 return R.string.deposit_funds;
             }
             if (!itemReceived) {

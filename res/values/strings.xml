@@ -9,13 +9,13 @@
     <string name="password_label">Password for the key:</string>
     <string name="waiting_for_confirmation_code">Send intermediate code and receive confirmation code from buyer</string>
     <string name="checking_balance">Checking balance for the received address</string>
-    <string name="waiting_funds_depositing">Waiting for funds depositing by buyer</string>
+    <string name="wait_funds_depositing">Wait for funds depositing by buyer</string>
     <string name="waiting_private_key">Waiting private key</string>
     <string name="you_should_take_funds">You should take the payment</string>
     <string name="successfully_sold">Successfully sold</string>
     <string name="checking_balance_buyer">Checking balance…</string>
     <string name="deposit_funds">Deposit funds to the generated address</string>
-    <string name="waiting_item">Waiting item delivery. Don\'t send encrypted private key before you\'ll get the purchase.</string>
+    <string name="waiting_item">Waiting for item delivery. Don\'t send encrypted private key before you\'ll get the purchase.</string>
     <string name="all_set">Successfully purchased item</string>
     <string name="status_unknown">Unknown status</string>
     <string name="selling">Selling</string>
@@ -23,7 +23,7 @@
     <string name="bought">Bought</string>
     <string name="sold">Sold</string>
     <string name="btc_suffix">BTC</string>
-    <string name="status_title">TODO:</string>
+    <string name="status_title">Status:</string>
     <string name="default_item_name">Unknown Item</string>
     <string name="generating_address_and_encrypted_private_key">Generating address and encrypted private key…</string>
     <string name="generating_confirmation_code">Generating confirmation code…</string>
@@ -50,5 +50,27 @@
     <string name="qr_code_content_description">QR code</string>
     <string name="copy">Copy</string>
     <string name="address_copied_to_clipboard">Address has been copied to clipboard.</string>
+    <string name="scan">Scan</string>
+    <string name="address">Address</string>
+    <string name="confirmation_code">Confirmation code</string>
+    <string name="your_address">your address</string>
+    <string name="encrypted_private_key">Encrypted private key</string>
+    <string name="send">Send…</string>
+    <string name="intermediate_code">Intermediate code:</string>
+    <string name="intermediate_code_hint">Intermediate code</string>
+    <string name="sellers_intermediate_code">Seller\'s intermediate code:</string>
+    <string name="confirmation_code_buyer_desc">Confirmation code</string>
+    <string name="confirmation_code_hint">Confirmation code</string>
+    <string name="address_hint">address</string>
+    <string name="encrypted_private_key_buyer_desc">Encrypted private key</string>
+    <string name="encrypted_private_key_hint">Encrypted private key</string>
+    <string name="show_qr_code">Show QR code</string>
+    <string name="deposit_funds_button">Deposit funds…</string>
+    <string name="buy_step_one">1. Send this confirmation code to seller so he can verify that his password matches address below</string>
+    <string name="buy_step_two">2. Deposit funds and tell seller to ship purchase</string>
+    <string name="buy_step_three">3. Send encrypted private key to seller when you receive purchase. He has password to encrypt this key and take money.</string>
+    <string name="sell_step_one">1. Send intermediate code to a buyer and ask for confirmation code.</string>
+    <string name="sell_step_two">2. Enter confirmation code and when funds will be available send your package.</string>
+    <string name="sell_step_three">3. Buyer should send encrypted private key what matches your password after delivery.</string>
 
 </resources>
