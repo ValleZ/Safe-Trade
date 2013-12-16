@@ -26,14 +26,14 @@
     <string name="status_title">TODO:</string>
     <string name="default_item_name">Unknown Item</string>
     <string name="generating_address_and_encrypted_private_key">Generating address and encrypted private key…</string>
-    <string name="generating_confiramtion_code">Generating confirmation code…</string>
+    <string name="generating_confirmation_code">Generating confirmation code…</string>
     <string name="dialog_get_intermediate_code_title">Enter intermediate code</string>
     <string name="scan_title">Scan intermediate code</string>
     <string name="error_open_camera">Unable to open camera. </string>
     <string name="no_email_clients">No email clients installed</string>
     <string name="decoding_confirmation_code_using_password">Decoding confirmation code using your password…</string>
     <string name="not_confirmation_but_intermediate_code">It\'s an intermediate code, not a confirmation. Please ensure that your code starts with \"cfrm\".</string>
-    <string name="not_confirmation_code">It isn\'t a confirmation code. Please ensure that your code starts with \\"cfrm\\".</string>
+    <string name="not_confirmation_code">It isn\'t a confirmation code. Please ensure that your code starts with \"cfrm\".</string>
     <string name="confirmation_code_doesnt_match">This confirmation code doesn\'t match your password or intermediate code. Ask buyer to double-check it.</string>
     <string name="decrypting_private_key">Decrypting private key…</string>
     <string name="unable_to_decrypt_private_key">Unable to decrypt this private key using your password.</string>
@@ -45,5 +45,7 @@
     <string name="scan_encrypted_private_key_title">Scan encrypted private key</string>
     <string name="scan_final_address_title">Scan address</string>
     <string name="scan_intermediate_code_title">Scan intermediate code</string>
+    <string name="buy_state_still_loading">Wait a second, address is not ready yet.</string>
+    <string name="no_wallet_installed">No installed bitcoin wallet found. Would you like to send this address to other device?</string>
 
 </resources>

@@ -123,7 +123,7 @@
 
             <Button
                 android:layout_gravity="center_vertical|right"
-                android:id="@+id/deposit_button"
+                android:id="@+id/show_qr_code_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Show QR code"

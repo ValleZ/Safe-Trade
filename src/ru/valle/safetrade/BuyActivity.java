@@ -22,8 +22,10 @@
  THE SOFTWARE.*/
 package ru.valle.safetrade;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -78,8 +81,39 @@ public class BuyActivity extends FragmentActivity {
                 sendEncryptedPrivateKey();
             }
         });
+        findViewById(R.id.deposit_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tradeInfo == null || TextUtils.isEmpty(tradeInfo.address)) {
+                    new AlertDialog.Builder(BuyActivity.this).setMessage(getString(R.string.buy_state_still_loading)).setPositiveButton(android.R.string.ok, null).show();
+                } else {
+                    depositFunds(tradeInfo.address);
+                }
+            }
+        });
+
 
         rowId = getIntent().getLongExtra(BaseColumns._ID, -1);
+    }
+
+    private void depositFunds(final String address) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("bitcoin:" + address));
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            new AlertDialog.Builder(BuyActivity.this).setMessage(getString(R.string.no_wallet_installed)).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT, address);
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(BuyActivity.this, getString(R.string.no_email_clients), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).setNegativeButton(android.R.string.cancel, null).show();
+        }
     }
 
     private void sendEncryptedPrivateKey() {
