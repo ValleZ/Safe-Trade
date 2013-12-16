@@ -24,6 +24,7 @@ package ru.valle.safetrade;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,7 +39,9 @@ import android.provider.BaseColumns;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.d_project.qrcode.ErrorCorrectLevel;
@@ -91,10 +94,52 @@ public class BuyActivity extends FragmentActivity {
                 }
             }
         });
+        findViewById(R.id.show_qr_code_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tradeInfo == null || TextUtils.isEmpty(tradeInfo.address)) {
+                    new AlertDialog.Builder(BuyActivity.this).setMessage(getString(R.string.buy_state_still_loading)).setPositiveButton(android.R.string.ok, null).show();
+                } else {
+                    showQrCode(tradeInfo.address);
+                }
+            }
+        });
 
 
         rowId = getIntent().getLongExtra(BaseColumns._ID, -1);
     }
+
+    private void showQrCode(final String address) {
+        QRCode qr = new QRCode();
+        qr.setTypeNumber(3);
+        qr.setErrorCorrectLevel(ErrorCorrectLevel.M);
+        qr.addData(address);
+        qr.make();
+        Bitmap bmp = qr.createImage((int) (300 * getResources().getDisplayMetrics().density));
+        View view = LayoutInflater.from(this).inflate(R.layout.address_qr_code_popup, null);
+        ((ImageView) view.findViewById(R.id.image)).setImageBitmap(bmp);
+        new AlertDialog.Builder(BuyActivity.this).setTitle(address).setView(view).setPositiveButton(R.string.copy, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                copyTextToClipboard(address, address);
+                Toast.makeText(BuyActivity.this, getString(R.string.address_copied_to_clipboard), Toast.LENGTH_SHORT).show();
+            }
+        }).setNegativeButton(android.R.string.cancel, null).show();
+
+    }
+
+    @SuppressWarnings("deprecation")
+    private void copyTextToClipboard(String label, String text) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText(label, text);
+            clipboard.setPrimaryClip(clip);
+        } else {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        }
+    }
+
 
     private void depositFunds(final String address) {
         try {
@@ -127,7 +172,7 @@ public class BuyActivity extends FragmentActivity {
                     qr.setErrorCorrectLevel(ErrorCorrectLevel.M);
                     qr.addData(encryptedPrivateKey);
                     qr.make();
-                    Bitmap bmp = qr.createImage(16, 24);
+                    Bitmap bmp = qr.createImage(640);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] pngBytes = baos.toByteArray();
@@ -229,7 +274,7 @@ public class BuyActivity extends FragmentActivity {
                         qr.setErrorCorrectLevel(ErrorCorrectLevel.M);
                         qr.addData(confirmationCode);
                         qr.make();
-                        Bitmap bmp = qr.createImage(16, 24);
+                        Bitmap bmp = qr.createImage(640);
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
                         byte[] pngBytes = baos.toByteArray();

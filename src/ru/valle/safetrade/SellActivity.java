@@ -354,7 +354,7 @@ public final class SellActivity extends FragmentActivity {
                         qr.setErrorCorrectLevel(ErrorCorrectLevel.M);
                         qr.addData(intermediateCode);
                         qr.make();
-                        Bitmap bmp = qr.createImage(16, 24);
+                        Bitmap bmp = qr.createImage(640);
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
                         byte[] pngBytes = baos.toByteArray();

@@ -47,5 +47,8 @@
     <string name="scan_intermediate_code_title">Scan intermediate code</string>
     <string name="buy_state_still_loading">Wait a second, address is not ready yet.</string>
     <string name="no_wallet_installed">No installed bitcoin wallet found. Would you like to send this address to other device?</string>
+    <string name="qr_code_content_description">QR code</string>
+    <string name="copy">Copy</string>
+    <string name="address_copied_to_clipboard">Address has been copied to clipboard.</string>
 
 </resources>
