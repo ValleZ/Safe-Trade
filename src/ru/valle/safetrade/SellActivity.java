@@ -51,10 +51,12 @@ import com.d_project.qrcode.ErrorCorrectLevel;
 import com.d_project.qrcode.QRCode;
 import ru.valle.btc.BTCUtils;
 import ru.valle.btc.KeyPair;
+import ru.valle.btc.UnspentOutputInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public final class SellActivity extends FragmentActivity {
     private static final String TAG = "SellActivity";
@@ -178,23 +180,23 @@ public final class SellActivity extends FragmentActivity {
             final BTCUtils.PrivateKeyInfo privateKeyInfo;
 
             //args
-            addressStateArg = addressState;
-            privateKeyInfo = BTCUtils.decodePrivateKey(tradeInfo.privateKey);
+//            addressStateArg = addressState;
+//            privateKeyInfo = BTCUtils.decodePrivateKey(tradeInfo.privateKey);
             //
-//            try {
-//                addressStateArg = new AddressState("1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a",
-//                        MainActivity.parseUnspentOutputsFromBlockchainInfo(
-//                                new String(QRCodesProvider.readStream(getResources().openRawResource(R.raw.fakeoutputs)))
-//                        )
-//                );
-//                privateKeyInfo = BTCUtils.decodePrivateKey(tradeInfo.privateKey);
-//            } catch (Exception e) {
-//                throw new RuntimeException();
-//            }
+            try {
+                addressStateArg = new AddressState("1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a",
+                        MainActivity.parseUnspentOutputsFromBlockchainInfo(
+                                new String(QRCodesProvider.readStream(getResources().openRawResource(R.raw.fakeoutputs)))
+                        )
+                );
+                privateKeyInfo = BTCUtils.decodePrivateKey(tradeInfo.privateKey);
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
             //
 
-
-            descView.setText(getString(R.string.confirm_tx_x_btc_to_addr, BTCUtils.formatValue(addressStateArg.getBalance()), finalAddress));
+            final long balance = addressStateArg.getBalance();
+            descView.setText(getString(R.string.confirm_tx_x_btc_to_addr, BTCUtils.formatValue(balance), finalAddress));
 
             final ToggleButton minFeeButton = (ToggleButton) feesSelectorView.findViewById(R.id.min_miner_fee);
             final ToggleButton safeFeeButton = (ToggleButton) feesSelectorView.findViewById(R.id.safe_miner_fee);
@@ -207,6 +209,7 @@ public final class SellActivity extends FragmentActivity {
             final ToggleButton maxDevFeeButton = (ToggleButton) feesSelectorView.findViewById(R.id.max_dev_fee);
 
             final TextView devFeeView = (TextView) feesSelectorView.findViewById(R.id.developer_fee);
+
             final TextView txDescFinalView = (TextView) feesSelectorView.findViewById(R.id.tx_desc_after_fees);
 
             CompoundButton.OnCheckedChangeListener feesSelectorListener = new CompoundButton.OnCheckedChangeListener() {
@@ -281,46 +284,18 @@ public final class SellActivity extends FragmentActivity {
                 }
 
                 private void updateDevFee(int level) {
-                    long expectedDevFee;
-                    switch (level) {
-                        default:
-                        case 0:
-                            expectedDevFee = 0;
-                            break;
-                        case 1:
-                            expectedDevFee = (long) (0.005 * addressStateArg.getBalance());//0.5%
-                            break;
-                        case 2:
-                            expectedDevFee = (long) (0.01 * addressStateArg.getBalance());//1.0%
-                            break;
-                    }
-                    expectedDevFee -= expectedDevFee % 10000;
-                    devFee = expectedDevFee < 50000 ? 0 : expectedDevFee;//0.5 mBTC
+                    devFee = getDevFee(level, balance);
                     devFeeView.setText(getString(R.string.tips_for_dev, BTCUtils.formatValue(devFee)));
                     updateFee(feeLevel);
                 }
 
                 private void updateFee(int level) {
                     feeLevel = level;
-                    final int txLen = BTCUtils.getMaximumTxSize(addressStateArg.getUnspentOutputs(), devFee == 0 ? 1 : 2, privateKeyInfo.isPublicKeyCompressed);
-                    long balance = addressStateArg.getBalance();
-                    long minFee = BTCUtils.calcMinimumFee(txLen, addressStateArg.getUnspentOutputs(), balance);
-                    final long notZeroMinFee = BTCUtils.MIN_FEE_PER_KB * (1 + txLen / 1000);
-                    switch (level) {
-                        default:
-                        case 0:
-                            fee = minFee;
-                            break;
-                        case 1:
-                            fee = (minFee == 0 ? notZeroMinFee : minFee) * 2;
-                            break;
-                        case 2:
-                            fee = (minFee == 0 ? notZeroMinFee : minFee) * 10;
-                            break;
-                    }
+                    fee = getMinerFee(level, devFee, balance, addressStateArg.getUnspentOutputs(), privateKeyInfo.isPublicKeyCompressed);
                     minersFeeView.setText(getString(R.string.miners_fee, BTCUtils.formatValue(fee)));
                     txDescFinalView.setText(getString(R.string.final_tx_desc, BTCUtils.formatValue(balance - fee - devFee)));
                 }
+
             };
 
 
@@ -332,7 +307,25 @@ public final class SellActivity extends FragmentActivity {
             ((ToggleButton) feesSelectorView.findViewById(R.id.max_dev_fee)).setOnCheckedChangeListener(feesSelectorListener);
 
             safeFeeButton.setChecked(true);
-            medDevFeeButton.setChecked(true);
+
+
+            if (getDevFee(1, balance) == 0) {
+                medDevFeeButton.setEnabled(false);
+                maxDevFeeButton.setEnabled(getDevFee(2, balance) > 0);
+                noDevFeeButton.setChecked(true);
+            } else {
+                medDevFeeButton.setChecked(true);
+            }
+
+            long minDevFee = getDevFee(0, balance);
+            if (getMinerFee(2, minDevFee, balance, addressStateArg.getUnspentOutputs(), privateKeyInfo.isPublicKeyCompressed) == balance - minDevFee) {
+                maxFeeButton.setEnabled(false);
+            }
+
+            if (getMinerFee(1, minDevFee, balance, addressStateArg.getUnspentOutputs(), privateKeyInfo.isPublicKeyCompressed) == balance - minDevFee) {
+                safeFeeButton.setEnabled(false);
+                minFeeButton.setChecked(true);
+            }
 
             new AlertDialog.Builder(SellActivity.this).setView(feesSelectorView)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -344,8 +337,49 @@ public final class SellActivity extends FragmentActivity {
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
         }
-
     }
+
+    private static long getDevFee(int level, long balance) {
+        long expectedDevFee;
+        switch (level) {
+            default:
+            case 0:
+                expectedDevFee = 0;
+                break;
+            case 1:
+                expectedDevFee = (long) (0.001 * balance);//0.1%
+                break;
+            case 2:
+                expectedDevFee = (long) (0.01 * balance);//1.0%
+                break;
+        }
+        expectedDevFee -= expectedDevFee % 10000;
+        return expectedDevFee < 50000 ? 0 : expectedDevFee;//0.5 mBTC
+    }
+
+    private static long getMinerFee(int level, long devFee, long balance, Collection<UnspentOutputInfo> unspentOutputs, boolean isPublicKeyCompressed) {
+        final int txLen = BTCUtils.getMaximumTxSize(unspentOutputs, devFee == 0 ? 1 : 2, isPublicKeyCompressed);
+        long minFee = BTCUtils.calcMinimumFee(txLen, unspentOutputs, balance);
+        final long notZeroMinFee = BTCUtils.MIN_FEE_PER_KB * (1 + txLen / 1000);
+        long localFee;
+        switch (level) {
+            default:
+            case 0:
+                localFee = minFee;
+                break;
+            case 1:
+                localFee = (minFee == 0 ? notZeroMinFee : minFee) * 2;
+                break;
+            case 2:
+                localFee = (minFee == 0 ? notZeroMinFee : minFee) * 10;
+                break;
+        }
+        if (balance - localFee - devFee < 0) {
+            localFee = balance - devFee;
+        }
+        return localFee;
+    }
+
 
     private void showAlert(String message) {
         new AlertDialog.Builder(SellActivity.this).setMessage(message).setPositiveButton(android.R.string.ok, null).show();
