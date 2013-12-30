@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+    >
+
+    <TextView
+        android:id="@+id/tx_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_tx_x_btc_to_addr"
+        />
+
+    <TextView
+        android:id="@+id/miners_fee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/miners_fee"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/min_miner_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/min_miner_fee"
+            android:textOn="@string/min_miner_fee"
+            />
+
+        <ToggleButton
+            android:id="@+id/safe_miner_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/safe_miner_fee"
+            android:textOn="@string/safe_miner_fee"
+            />
+
+        <ToggleButton
+            android:id="@+id/max_miner_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/max_miner_fee"
+            android:textOn="@string/max_miner_fee"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/developer_fee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/tips_for_dev"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/no_dev_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/no_dev_fee"
+            android:textOn="@string/no_dev_fee"
+            />
+
+        <ToggleButton
+            android:id="@+id/med_dev_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/med_dev_fee"
+            android:textOn="@string/med_dev_fee"
+            />
+
+        <ToggleButton
+            android:id="@+id/max_dev_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/max_dev_fee"
+            android:textOn="@string/max_dev_fee"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tx_desc_after_fees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/final_tx_desc"
+        />
+</LinearLayout>

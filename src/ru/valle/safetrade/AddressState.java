@@ -25,11 +25,16 @@ package ru.valle.safetrade;
 import ru.valle.btc.UnspentOutputInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class AddressState {
     private final ArrayList<UnspentOutputInfo> unspentOutputs;
+    public final String address;
 
-    public AddressState(ArrayList<UnspentOutputInfo> unspentOutputs) {
+    public AddressState(String address, ArrayList<UnspentOutputInfo> unspentOutputs) {
+        this.address = address;
         this.unspentOutputs = unspentOutputs;
     }
 
@@ -41,5 +46,9 @@ public class AddressState {
             }
         }
         return total;
+    }
+
+    public Collection<UnspentOutputInfo> getUnspentOutputs() {
+        return Collections.unmodifiableCollection(unspentOutputs);
     }
 }

@@ -68,9 +68,24 @@
     <string name="deposit_funds_button">Deposit funds…</string>
     <string name="buy_step_one">1. Send this confirmation code to seller so he can verify that his password matches address below</string>
     <string name="buy_step_two">2. Deposit funds and tell seller to ship purchase</string>
-    <string name="buy_step_three">3. Send encrypted private key to seller when you receive purchase. He has password to encrypt this key and take money.</string>
+    <string name="buy_step_three">3. Send encrypted private key to seller when you receive purchase. He has password to decrypt this key and take money.</string>
     <string name="sell_step_one">1. Send intermediate code to a buyer and ask for confirmation code.</string>
     <string name="sell_step_two">2. Enter confirmation code and when funds will be available send your package.</string>
     <string name="sell_step_three">3. Buyer should send encrypted private key what matches your password after delivery.</string>
-
+    <string name="private_key_decrypted">Private key for address %s has been decrypted! Now scan your wallet address and transfer the money.</string>
+    <string name="state_not_loaded_yet">Wait a second, reading state from database is in progress…</string>
+    <string name="no_private_key_from_buyer">You should obtain private key first from buyer.</string>
+    <string name="alert_checking_balance">Wait a second, checking address balance…</string>
+    <string name="zero_balance">Address %s have zero balance.</string>
+    <string name="enter_your_final_address">Please enter your wallet address.</string>
+    <string name="min_miner_fee">Minimal</string>
+    <string name="safe_miner_fee">Safe</string>
+    <string name="max_miner_fee">Urgent TX</string>
+    <string name="no_dev_fee">Nothing</string>
+    <string name="med_dev_fee">Thanks!</string>
+    <string name="max_dev_fee">Many Thanks!</string>
+    <string name="confirm_tx_x_btc_to_addr">Please confirm transferring %1$s BTC to %2$s.</string>
+    <string name="miners_fee">Miners\' fee: %s BTC</string>
+    <string name="tips_for_dev">Tips for developer: %s BTC</string>
+    <string name="final_tx_desc">You\'ll receive %1$s BTC.</string>
 </resources>

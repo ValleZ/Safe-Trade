@@ -110,6 +110,7 @@
 
 
         <TextView
+            android:id="@+id/address_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/address"
@@ -214,7 +215,6 @@
                 android:id="@+id/take_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:maxWidth="100dp"
                 android:text="@string/take_no_btc_button"
                 />

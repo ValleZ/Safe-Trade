@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import ru.valle.btc.BTCUtils;
 import ru.valle.btc.BitcoinException;
@@ -33,6 +34,7 @@ import ru.valle.btc.Transaction;
 import ru.valle.btc.UnspentOutputInfo;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,24 +56,15 @@ public final class MainActivity extends FragmentActivity {
                     try {
                         URL url = new URL("https://blockchain.info/unspent?active=" + address);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                        ArrayList<UnspentOutputInfo> unspentOutputs = new ArrayList<UnspentOutputInfo>();
+                        ArrayList<UnspentOutputInfo> unspentOutputs = null;
                         try {
-                            JSONObject jsonObject = new JSONObject(new String(QRCodesProvider.readStream(urlConnection.getInputStream()), "UTF-8"));
-                            JSONArray unspentOutputsArray = jsonObject.getJSONArray("unspent_outputs");
-                            for (int i = 0; i < unspentOutputsArray.length(); i++) {
-                                JSONObject unspentOutput = unspentOutputsArray.getJSONObject(i);
-                                byte[] txHash = BTCUtils.reverse(BTCUtils.fromHex(unspentOutput.getString("tx_hash")));
-                                Transaction.Script script = new Transaction.Script(BTCUtils.fromHex(unspentOutput.getString("script")));
-                                long value = unspentOutput.getLong("value");
-                                int outputIndex = unspentOutput.getInt("tx_output_n");
-                                unspentOutputs.add(new UnspentOutputInfo(txHash, script, value, outputIndex));
-                            }
+                            unspentOutputs = parseUnspentOutputsFromBlockchainInfo(new String(QRCodesProvider.readStream(urlConnection.getInputStream()), "UTF-8"));
                         } catch (FileNotFoundException e) {
                             Log.d(TAG, "no unspent outputs: " + e.getMessage());
                         } finally {
                             urlConnection.disconnect();
                         }
-                        AddressState addressState = new AddressState(unspentOutputs);
+                        AddressState addressState = new AddressState(address, unspentOutputs);
                         long balance = addressState.getBalance();
                         SQLiteDatabase db = DatabaseHelper.getInstance(context).getWritableDatabase();
                         ContentValues cv = new ContentValues();
@@ -92,6 +85,26 @@ public final class MainActivity extends FragmentActivity {
                 }
             }.execute();
         }
+    }
+
+    public static ArrayList<UnspentOutputInfo> parseUnspentOutputsFromBlockchainInfo(String response) throws JSONException, IOException {
+        ArrayList<UnspentOutputInfo> unspentOutputs = new ArrayList<UnspentOutputInfo>();
+        JSONObject jsonObject = new JSONObject(response);
+        JSONArray unspentOutputsArray = jsonObject.getJSONArray("unspent_outputs");
+        for (int i = 0; i < unspentOutputsArray.length(); i++) {
+            JSONObject unspentOutput = unspentOutputsArray.getJSONObject(i);
+            byte[] txHash = BTCUtils.reverse(BTCUtils.fromHex(unspentOutput.getString("tx_hash")));
+            Transaction.Script script = new Transaction.Script(BTCUtils.fromHex(unspentOutput.getString("script")));
+            long value = unspentOutput.getLong("value");
+            int outputIndex = unspentOutput.getInt("tx_output_n");
+            long confirmations = -1;
+            try {
+                confirmations = unspentOutput.getLong("confirmations");
+            } catch (Exception ignored) {
+            }
+            unspentOutputs.add(new UnspentOutputInfo(txHash, script, value, outputIndex, confirmations));
+        }
+        return unspentOutputs;
     }
 
     @Override
